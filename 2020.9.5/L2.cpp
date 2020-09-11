@@ -16,7 +16,6 @@ int main()
     }
     dis[i] = 1000;                         //i=n至始点的距离为1000-dis[n]
     oil[i] = oil[i - 1] - (dis[i - 1] - 1000) * (2 * k - 1); //为了在i=n处取得n*500公升汽油，卡车至少从始点开n+1次满载车至i=n，加上从i=n返回始点的n趟返程空车，合计2n+1次，2n+1趟的总耗油量应正好为(1000-dis[n])*(2n+1)，即始点藏油为oil[n]+(1000-dis[n])*(2n+1)
-
     cout << "No."
          << "\t"
          << "Distance(k.m.)"
@@ -24,7 +23,7 @@ int main()
          << " oil(litre)" << endl;
     for (int j = i; j > 0; j--)
     {
-        cout << setprecision(5) << i - j << "\t" << setprecision(5) << 1000 - dis[j] << "\t\t" << oil[j] << endl;
+        cout << setiosflags(ios::fixed) << setprecision(2) << i - j << "\t" << setiosflags(ios::fixed) << setprecision(2) << 1000 - dis[j] << "\t\t" << oil[j] << endl;
     }
 
     return 0;
