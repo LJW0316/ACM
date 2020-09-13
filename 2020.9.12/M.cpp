@@ -1,91 +1,64 @@
-#include <iostream>
-#include <queue>
-#include <cstring>
+#include <bits/stdc++.h>
 using namespace std;
-
-const int maxn = 25;
 
 struct node
 {
-    int x, y, t, d;
+    int x, y, w, d;
 };
-
-int maze[maxn][maxn];
-bool vis[maxn][maxn][maxn];
 int dx[4] = {1, -1, 0, 0};
 int dy[4] = {0, 0, 1, -1};
-queue<node> que;
+int maze[25][25];
 int n, m, k;
+bool vis[25][25][25]; //记录是否访问过及跳过障碍数
 
-bool can_vis(int x, int y)
-{
-    if (x < 0 || x >= n)
-    {
-        return false;
-    }
-    if (y < 0 || y >= m)
-    {
-        return false;
-    }
-    return true;
-}
-
-void bfs()
+void bfs() //广度优先搜素求最短路径
 {
     memset(vis, false, sizeof(vis));
-    vis[0][0][0] = true;
-    while (!que.empty())
+    queue<node> que;        //每组重新定义队列，防止互相影响
+    que.push({1, 1, 0, 0}); //起点入队
+    vis[1][1][0] = true;    //记录起点已被访问，跳过0个障碍
+    while (!que.empty())    //若队列不为空，继续搜索
     {
-        node cur = que.front();
-        que.pop();
-        if (cur.x == n && cur.y == m)
+        node cur = que.front();       //获取队首信息
+        que.pop();                    //队首出队
+        if (cur.x == n && cur.y == m) //到达终点，输出，结束搜素
         {
-            cout << cur.t << endl;
+            cout << cur.w << endl;
             return;
         }
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++) //进行移动
         {
             int nx = cur.x + dx[i];
-            int ny = cur.y + dy[i];
-            if (can_vis(nx,ny))
+            int ny = cur.y + dy[i];                     //记录移动后坐标
+            if (nx > 0 && ny > 0 && nx <= n && ny <= m) //移动后在边界内部
             {
-                int temp;
-                if (maze[nx][ny])
-                {
+                int temp;         //记录需要跳过的墙
+                if (maze[nx][ny]) //移动后为墙，需要跳过的墙+1
                     temp = cur.d + 1;
-                }
                 else
+                    temp = 0;                        //移动后不是墙，需要跳过的墙为0
+                if (temp <= k && !vis[nx][ny][temp]) //若需要跳过的墙小于k，且移动后为访问
                 {
-                    temp = 0;
-                }
-                if (temp <= k && !vis[nx][ny][temp])
-                {
-                    que.push({nx, ny, cur.t + 1, temp});
-                    vis[nx][ny][temp] = true;
+                    que.push({nx, ny, cur.w + 1, temp}); //新元素入队
+                    vis[nx][ny][temp] = true;            //新位置已访问
                 }
             }
         }
     }
-    cout << -1 << endl;
+    cout << -1 << endl; //无法走出
 }
 
 int main()
 {
-    int r;
-    cin >> r;
-    while (r > 0)
+    int T;
+    cin >> T;
+    while (T--)
     {
-        r--;
         cin >> n >> m >> k;
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = 0; j < m; j++)
-            {
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= m; j++)
                 cin >> maze[i][j];
-            }
-        }
-        que.push({0, 0, 0, 0});
-        bfs();
+        bfs(); //广度优先搜素求解
     }
     return 0;
 }
