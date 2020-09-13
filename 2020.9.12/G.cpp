@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-int method_0(int x, int y, int z)
+int method_0(int x, int y, int z) //情况1：无rgb花束
 {
     int sum = 0;
     sum += x / 3;
@@ -13,7 +13,7 @@ int method_0(int x, int y, int z)
     return sum;
 }
 
-int method_1(int x, int y, int z)
+int method_1(int x, int y, int z) //情况2：一束rgb花束
 {
     int sum = 0;
     if (x > 0 && y > 0 && z > 0)
@@ -32,7 +32,7 @@ int method_1(int x, int y, int z)
     return sum;
 }
 
-int method_2(int x, int y, int z)
+int method_2(int x, int y, int z) //情况3：两束rgb花束
 {
     int sum = 0;
     if (x > 1 && y > 1 && z > 1)
@@ -57,7 +57,7 @@ int main()
     cin >> r >> g >> b;
     s1 = method_0(r, g, b);
     s2 = method_1(r, g, b);
-    s3 = method_2(r, g, b);
-    cout << max(max(s1, s2), s3) << endl;
+    s3 = method_2(r, g, b);               //三束rgb可以拆分成rrr,ggg,bbb，故最优解对应的rgb其实只有0,1,2三种情况
+    cout << max(max(s1, s2), s3) << endl; //输出三种情况中最大值
     return 0;
 }
