@@ -19,9 +19,9 @@ void dfs(int x, int y) //广度优先搜素进行遍历
     {
         int nx = x + dx[i];
         int ny = y + dy[i]; //记录移动后坐标
-        if (nx < 0 || nx > n)
+        if (nx < 0 || nx >= n)
             continue;
-        if (ny < 0 || ny > m)
+        if (ny < 0 || ny >= m)
             continue;       //判断是否越界
         if (a[nx][ny] == 0) //判断是否为0
             continue;
@@ -40,11 +40,11 @@ int main()
             cin >> a[i][j];
         }
     }
-    for (int i = 0; i < m; i++)
+    for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
         {
-            if (a[i][j]) //寻找1的点进行深度优先搜索
+            if (a[i][j] == 1) //寻找1的点进行深度优先搜索
             {
                 cnt = 0; //用于记录当前区块相连1的个数
                 dfs(i, j);
