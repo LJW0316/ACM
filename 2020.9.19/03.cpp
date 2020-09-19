@@ -17,8 +17,8 @@ int main()
             cout << a << " " << b << " " << c << endl;
         }
 
-    } while (next_permutation(num, num + 9)); //使用next_permutation函数枚举num中元素所有顺序
-
+    } while (next_permutation(num, num + 9)); 
+    //使用next_permutation函数枚举num中元素所有顺序(SLT中函数，实现把123456789变换为12345698，当变换为与第一次相同的顺序时返回false)
     if (!cnt) //0种可能输出NO!!!
     {
         cout << "NO!!!" << endl;
